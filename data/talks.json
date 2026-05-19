@@ -1,0 +1,72 @@
+[
+  {
+    "id": "talk1",
+    "title": "Introduction to AI in Software Development",
+    "speakers": ["Alice Johnson"],
+    "category": ["AI", "Software Development"],
+    "duration": 60,
+    "description": "Explore how AI is transforming the landscape of software development, from intelligent code generation to automated testing.",
+    "startTime": "10:00 AM",
+    "endTime": "11:00 AM"
+  },
+  {
+    "id": "talk2",
+    "title": "Cloud-Native Architectures with Kubernetes",
+    "speakers": ["Bob Smith"],
+    "category": ["Cloud", "DevOps", "Kubernetes"],
+    "duration": 60,
+    "description": "A deep dive into building and deploying scalable applications using Kubernetes in a cloud-native environment.",
+    "startTime": "11:10 AM",
+    "endTime": "12:10 PM"
+  },
+  {
+    "id": "talk3",
+    "title": "Effective State Management in Modern Frontends",
+    "speakers": ["Charlie Brown"],
+    "category": ["Frontend", "JavaScript"],
+    "duration": 40,
+    "description": "Discussing various state management patterns and libraries for building robust and maintainable frontend applications.",
+    "startTime": "12:20 PM",
+    "endTime": "1:00 PM"
+  },
+  {
+    "id": "lunch",
+    "title": "Lunch Break",
+    "speakers": [],
+    "category": ["Break"],
+    "duration": 60,
+    "description": "Enjoy a delicious lunch and network with fellow attendees.",
+    "startTime": "1:00 PM",
+    "endTime": "2:00 PM"
+  },
+  {
+    "id": "talk4",
+    "title": "Securing Your APIs: Best Practices",
+    "speakers": ["Diana Prince"],
+    "category": ["Security", "Backend"],
+    "duration": 60,
+    "description": "Learn essential strategies and best practices for securing your RESTful and GraphQL APIs from common vulnerabilities.",
+    "startTime": "2:10 PM",
+    "endTime": "3:10 PM"
+  },
+  {
+    "id": "talk5",
+    "title": "Data Visualization with D3.js",
+    "speakers": ["Eve Adams"],
+    "category": ["Data Science", "Frontend"],
+    "duration": 60,
+    "description": "An interactive session on creating powerful and custom data visualizations using the D3.js library.",
+    "startTime": "3:20 PM",
+    "endTime": "4:20 PM"
+  },
+  {
+    "id": "talk6",
+    "title": "Serverless Functions for Scalable Applications",
+    "speakers": ["Frank White"],
+    "category": ["Serverless", "Cloud", "Backend"],
+    "duration": 60,
+    "description": "Discover how serverless functions can help you build scalable, cost-effective, and maintenance-free backend services.",
+    "startTime": "4:30 PM",
+    "endTime": "5:30 PM"
+  }
+]

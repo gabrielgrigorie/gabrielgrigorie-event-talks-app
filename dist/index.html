@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Talks Event Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0056b3;
+            margin-bottom: 30px;
+        }
+
+        .search-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #categorySearch {
+            padding: 10px;
+            width: 80%;
+            max-width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .talk-card {
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .talk-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .talk-card.break {
+            background-color: #e0f7fa;
+            border-color: #b2ebf2;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .talk-card h2 {
+            color: #0056b3;
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+
+        .talk-card h3 {
+            color: #555;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .talk-card p {
+            font-size: 0.95em;
+            line-height: 1.5;
+            color: #666;
+        }
+
+        .talk-card .time {
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .talk-card .category {
+            font-style: italic;
+            color: #007bff;
+            margin-top: 10px;
+            font-size: 0.85em;
+        }
+
+        .talk-card .duration {
+            font-size: 0.8em;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tech Talks Event Schedule</h1>
+        <div class="search-container">
+            <input type="text" id="categorySearch" placeholder="Search by category...">
+        </div>
+        <div id="schedule" class="schedule-grid">
+            <!-- Talks will be loaded here by JavaScript -->
+        </div>
+    </div>
+    <script>
+        const talksData = [
+            {
+                "id": "talk1",
+                "title": "Introduction to AI in Software Development",
+                "speakers": ["Alice Johnson"],
+                "category": ["AI", "Software Development"],
+                "duration": 60,
+                "description": "Explore how AI is transforming the landscape of software development, from intelligent code generation to automated testing.",
+                "startTime": "10:00 AM",
+                "endTime": "11:00 AM"
+            },
+            {
+                "id": "talk2",
+                "title": "Cloud-Native Architectures with Kubernetes",
+                "speakers": ["Bob Smith"],
+                "category": ["Cloud", "DevOps", "Kubernetes"],
+                "duration": 60,
+                "description": "A deep dive into building and deploying scalable applications using Kubernetes in a cloud-native environment.",
+                "startTime": "11:10 AM",
+                "endTime": "12:10 PM"
+            },
+            {
+                "id": "talk3",
+                "title": "Effective State Management in Modern Frontends",
+                "speakers": ["Charlie Brown"],
+                "category": ["Frontend", "JavaScript"],
+                "duration": 40,
+                "description": "Discussing various state management patterns and libraries for building robust and maintainable frontend applications.",
+                "startTime": "12:20 PM",
+                "endTime": "1:00 PM"
+            },
+            {
+                "id": "lunch",
+                "title": "Lunch Break",
+                "speakers": [],
+                "category": ["Break"],
+                "duration": 60,
+                "description": "Enjoy a delicious lunch and network with fellow attendees.",
+                "startTime": "1:00 PM",
+                "endTime": "2:00 PM"
+            },
+            {
+                "id": "talk4",
+                "title": "Securing Your APIs: Best Practices",
+                "speakers": ["Diana Prince"],
+                "category": ["Security", "Backend"],
+                "duration": 60,
+                "description": "Learn essential strategies and best practices for securing your RESTful and GraphQL APIs from common vulnerabilities.",
+                "startTime": "2:10 PM",
+                "endTime": "3:10 PM"
+            },
+            {
+                "id": "talk5",
+                "title": "Data Visualization with D3.js",
+                "speakers": ["Eve Adams"],
+                "category": ["Data Science", "Frontend"],
+                "duration": 60,
+                "description": "An interactive session on creating powerful and custom data visualizations using the D3.js library.",
+                "startTime": "3:20 PM",
+                "endTime": "4:20 PM"
+            },
+            {
+                "id": "talk6",
+                "title": "Serverless Functions for Scalable Applications",
+                "speakers": ["Frank White"],
+                "category": ["Serverless", "Cloud", "Backend"],
+                "duration": 60,
+                "description": "Discover how serverless functions can help you build scalable, cost-effective, and maintenance-free backend services.",
+                "startTime": "4:30 PM",
+                "endTime": "5:30 PM"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const scheduleContainer = document.getElementById('schedule');
+            const categorySearchInput = document.getElementById('categorySearch');
+
+            // Store original talks to reset filters
+            let allTalks = talksData; // Use embedded data
+
+            function renderSchedule(filteredTalks) {
+                scheduleContainer.innerHTML = ''; // Clear existing schedule
+                filteredTalks.forEach(talk => {
+                    const talkCard = document.createElement('div');
+                    talkCard.classList.add('talk-card');
+                    if (talk.id === 'lunch') {
+                        talkCard.classList.add('break');
+                    }
+
+                    let speakersHtml = '';
+                    if (talk.speakers && talk.speakers.length > 0) {
+                        speakersHtml = `<h3>${talk.speakers.join(' & ')}</h3>`;
+                    }
+
+                    let categoryHtml = '';
+                    if (talk.category && talk.category.length > 0) {
+                        categoryHtml = `<p class="category">Categories: ${talk.category.join(', ')}</p>`;
+                    }
+
+                    talkCard.innerHTML = `
+                        <p class="time">${talk.startTime} - ${talk.endTime}</p>
+                        <h2>${talk.title}</h2>
+                        ${speakersHtml}
+                        <p>${talk.description}</p>
+                        ${categoryHtml}
+                        ${talk.id !== 'lunch' ? `<p class="duration">Duration: ${talk.duration} minutes</p>` : ''}
+                    `;
+                    scheduleContainer.appendChild(talkCard);
+                });
+            }
+
+            // Initial render
+            renderSchedule(allTalks);
+
+            // Search functionality
+            categorySearchInput.addEventListener('keyup', (event) => {
+                const searchTerm = event.target.value.toLowerCase();
+                const filteredTalks = allTalks.filter(talk => {
+                    if (talk.category) {
+                        return talk.category.some(cat => cat.toLowerCase().includes(searchTerm));
+                    }
+                    return false;
+                });
+                renderSchedule(filteredTalks);
+            });
+        });
+    </script>
+</body>
+</html>
